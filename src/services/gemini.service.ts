@@ -2,6 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { GoogleGenAI, Type } from '@google/genai';
 import { LanguageService } from './language.service';
 
+// Declare process to avoid TypeScript errors if types/node is missing
+declare const process: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +13,9 @@ export class GeminiService {
   private langService = inject(LanguageService);
 
   constructor() {
-    this.ai = new GoogleGenAI({ apiKey: process.env['API_KEY'] || '' });
+    // Safely access process.env to prevent ReferenceError in browser environments
+    const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) ? process.env.API_KEY : '';
+    this.ai = new GoogleGenAI({ apiKey });
   }
 
   async generateProducts(query: string): Promise<any[]> {
