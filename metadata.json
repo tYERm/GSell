@@ -1,0 +1,5 @@
+{
+  "name": "GenStore",
+  "description": "A comprehensive online store with multi-language support, categories, and authentication.",
+  "requestFramePermissions": []
+}
